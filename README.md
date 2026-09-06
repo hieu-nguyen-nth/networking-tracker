@@ -1,36 +1,135 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Berkeley Networking Tracker
 
-## Getting Started
+A secure, full-stack networking tracker for maintaining relationships with people you meet at Berkeley. Authenticated users can create, view, edit, delete, sort, and filter their own contacts. Neon Postgres provides persistent storage, Neon Managed Better Auth handles authentication, and Row Level Security prevents users from accessing contacts they do not own.
 
-First, run the development server:
+> This README is being completed alongside the application. Sections marked **TODO** will be updated with verified production details and evidence before submission.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Live Application
+
+**TODO:** Add the public Vercel URL after deployment.
+
+## Product Walkthrough
+
+**TODO:** Add screenshots or a short walkthrough covering sign-in, sign-out, contact CRUD, refresh persistence, invalid input, and two-user isolation.
+
+## Features
+
+- Sign up, sign in, and sign out with Neon Managed Better Auth
+- Private contact records for every authenticated user
+- Create, view, edit, and delete contacts
+- Sort and filter contacts
+- Responsive desktop and mobile layouts
+- Clear loading, empty, success, and error states
+- Server-enforced validation and Postgres Row Level Security
+
+## Technology Stack
+
+- **Next.js and React:** Full-stack application framework and user interface
+- **TypeScript:** Static type safety
+- **Tailwind CSS:** Responsive, consistent styling
+- **Neon Postgres:** Persistent relational database
+- **Neon Managed Better Auth:** User authentication
+- **Neon Data API and `@neondatabase/neon-js`:** Authenticated data access
+- **Vitest:** Automated validation tests
+- **Vercel:** Production hosting
+
+## Architecture
+
+```text
+User -> Next.js UI -> Neon JS client -> Neon Data API -> RLS -> Neon Postgres
+                     Neon Managed Better Auth supplies the authenticated user
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The project separates interface components, validation, authentication, and contact data-access logic. **TODO:** Update this section with the final folder structure and request flow.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Local Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Prerequisites
 
-## Learn More
+- Node.js
+- npm
+- A Neon project with Managed Better Auth and the Data API enabled
 
-To learn more about Next.js, take a look at the following resources:
+### Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+git clone <repository-url>
+cd networking-tracker
+npm install
+cp .env.example .env.local
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Open [http://localhost:3000](http://localhost:3000).
 
-## Deploy on Vercel
+**TODO:** Replace the repository placeholder and document any additional setup commands.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Environment Variables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The application will document required variable names in `.env.example`. Real credentials belong only in `.env.local` and Vercel's encrypted environment settings.
+
+```env
+NEXT_PUBLIC_NEON_AUTH_URL=
+NEXT_PUBLIC_NEON_DATA_API_URL=
+```
+
+`DATABASE_URL`, `NEON_AUTH_BASE_URL`, cookie secrets, and other secret values must remain server-only if used. Never commit real values.
+
+## Database Schema
+
+The `contacts` table will contain:
+
+| Column | Type | Purpose |
+| --- | --- | --- |
+| `id` | UUID | Primary key |
+| `user_id` | text | Owner; defaults to `auth.user_id()` and cannot be null |
+| `name` | text | Required contact name |
+| `company` | text | Optional company |
+| `role` | text | Optional role or title |
+| `where_met` | text | Optional meeting context |
+| `notes` | text | Optional notes |
+| `priority` | text | `high`, `medium`, or `low` |
+| `created_at` | timestamp | Creation time |
+| `updated_at` | timestamp | Last update time |
+
+**TODO:** Replace this summary with the verified final migration and constraints.
+
+## Authentication and Row Level Security
+
+Neon Managed Better Auth identifies the signed-in user. The `contacts.user_id` column defaults to `auth.user_id()`. Row Level Security is enabled with separate `SELECT`, `INSERT`, `UPDATE`, and `DELETE` policies requiring the authenticated user ID to match the row owner. Insert and update policies use `WITH CHECK` so ownership cannot be assigned or transferred to another user.
+
+**TODO:** Add the verified policy definitions and two-account test results.
+
+## Testing
+
+```bash
+npm test
+```
+
+**TODO:** Document the automated validation tests and include passing output.
+
+## Deployment
+
+The application will be deployed from this public GitHub repository to Vercel. Production environment variables will be configured in Vercel, and the deployed domain will be registered as a trusted Neon Auth origin.
+
+**TODO:** Add the final deployment procedure and public URL.
+
+## Known Limitations and Future Improvements
+
+- No contact sharing or team workspaces
+- No administrator dashboard
+- No bulk import or export
+- No AI functionality
+
+**TODO:** Add limitations discovered during final verification and realistic next improvements.
+
+## Grading Evidence
+
+- [ ] Public Vercel application URL
+- [ ] Sign-in and sign-out evidence
+- [ ] Create, edit, delete, and refresh-persistence evidence
+- [ ] Invalid-input evidence
+- [ ] Passing automated test output
+- [ ] Two-account privacy-test evidence
+- [ ] Schema and RLS explanation
+- [ ] Confirmation that no secrets are committed
