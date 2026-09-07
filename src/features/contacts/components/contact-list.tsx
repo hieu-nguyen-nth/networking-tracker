@@ -3,18 +3,45 @@ import type { Contact } from "@/features/contacts/types/contact";
 
 type ContactListProps = Readonly<{
   contacts: Contact[];
+  hasActiveFilters?: boolean;
   onAdd: () => void;
+  onClearFilters?: () => void;
   onDelete: (contactId: string) => Promise<void>;
   onEdit: (contact: Contact) => void;
 }>;
 
 export function ContactList({
   contacts,
+  hasActiveFilters = false,
   onAdd,
+  onClearFilters,
   onDelete,
   onEdit,
 }: ContactListProps) {
   if (contacts.length === 0) {
+    if (hasActiveFilters) {
+      return (
+        <section className="border border-[#E3E2D8] bg-[#F4F4EB] p-10 text-center sm:p-14">
+          <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#A71D31]">
+            No matches
+          </p>
+          <h2 className="mt-3 text-2xl font-medium tracking-[-0.03em]">
+            Try a different search
+          </h2>
+          <p className="mx-auto mt-4 max-w-lg text-[#474744]">
+            None of your contacts match the current search and priority filter.
+          </p>
+          <button
+            className="mt-7 min-h-11 border border-[#C9C8BD] px-5 py-2 text-xs font-medium uppercase tracking-[0.12em] text-[#191918] hover:bg-[#ECEBE0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A71D31]"
+            onClick={onClearFilters}
+            type="button"
+          >
+            Clear filters
+          </button>
+        </section>
+      );
+    }
+
     return (
       <section className="border border-[#E3E2D8] bg-[#F4F4EB] p-10 text-center sm:p-14">
         <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#A71D31]">Your network</p>

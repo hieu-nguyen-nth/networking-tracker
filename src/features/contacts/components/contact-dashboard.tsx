@@ -1,13 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
 
 import { AccountMenu } from "@/features/account/components/account-menu";
+import { ContactControls } from "@/features/contacts/components/contact-controls";
 import { ContactForm } from "@/features/contacts/components/contact-form";
 import { ContactList } from "@/features/contacts/components/contact-list";
 import { useContacts } from "@/features/contacts/hooks/use-contacts";
 import type { Contact } from "@/features/contacts/types/contact";
 import type { ContactInput } from "@/features/contacts/validation/contact-schema";
+import {
+  getVisibleContacts,
+  type ContactPriorityFilter,
+  type ContactSort,
+} from "@/features/contacts/utils/contact-view";
 
 type EditorState =
   | { mode: "closed" }
@@ -20,6 +26,25 @@ export function ContactDashboard() {
   const [editor, setEditor] = useState<EditorState>({ mode: "closed" });
   const [notice, setNotice] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
+  const [priority, setPriority] = useState<ContactPriorityFilter>("all");
+  const [sort, setSort] = useState<ContactSort>("newest");
+  const deferredQuery = useDeferredValue(query);
+  const visibleContacts = useMemo(
+    () =>
+      getVisibleContacts(contacts, {
+        priority,
+        query: deferredQuery,
+        sort,
+      }),
+    [contacts, deferredQuery, priority, sort],
+  );
+  const hasActiveFilters = query.trim().length > 0 || priority !== "all";
+
+  function clearFilters() {
+    setQuery("");
+    setPriority("all");
+  }
 
   function openCreateForm() {
     setNotice(null);
@@ -153,12 +178,28 @@ export function ContactDashboard() {
             ) : null}
 
             {status === "ready" ? (
-              <ContactList
-                contacts={contacts}
-                onAdd={openCreateForm}
-                onDelete={handleDelete}
-                onEdit={openEditForm}
-              />
+              <>
+                {contacts.length > 0 ? (
+                  <ContactControls
+                    onPriorityChange={setPriority}
+                    onQueryChange={setQuery}
+                    onSortChange={setSort}
+                    priority={priority}
+                    query={query}
+                    resultCount={visibleContacts.length}
+                    sort={sort}
+                    totalCount={contacts.length}
+                  />
+                ) : null}
+                <ContactList
+                  contacts={visibleContacts}
+                  hasActiveFilters={hasActiveFilters}
+                  onAdd={openCreateForm}
+                  onClearFilters={clearFilters}
+                  onDelete={handleDelete}
+                  onEdit={openEditForm}
+                />
+              </>
             ) : null}
           </div>
 
