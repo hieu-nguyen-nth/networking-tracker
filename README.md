@@ -92,13 +92,20 @@ The `contacts` table will contain:
 | `created_at` | timestamp | Creation time |
 | `updated_at` | timestamp | Last update time |
 
-**TODO:** Replace this summary with the verified final migration and constraints.
+The version-controlled migrations create this schema, enforce nonblank names and valid priorities, index `user_id`, and maintain `updated_at` automatically.
 
 ## Authentication and Row Level Security
 
 Neon Managed Better Auth identifies the signed-in user. The `contacts.user_id` column defaults to `auth.user_id()`. Row Level Security is enabled with separate `SELECT`, `INSERT`, `UPDATE`, and `DELETE` policies requiring the authenticated user ID to match the row owner. Insert and update policies use `WITH CHECK` so ownership cannot be assigned or transferred to another user.
 
-**TODO:** Add the verified policy definitions and two-account test results.
+| Policy | Operation | Ownership rule |
+| --- | --- | --- |
+| `contacts_select_own` | `SELECT` | `USING (auth.user_id() = user_id)` |
+| `contacts_insert_own` | `INSERT` | `WITH CHECK (auth.user_id() = user_id)` |
+| `contacts_update_own` | `UPDATE` | Matching `USING` and `WITH CHECK` rules |
+| `contacts_delete_own` | `DELETE` | `USING (auth.user_id() = user_id)` |
+
+RLS is both enabled and forced. The anonymous role has no contact-table privileges; the authenticated role receives CRUD privileges subject to these policies. Database metadata verification confirms all four policies are active. **TODO:** Add the two-real-account test results after the authentication UI is complete.
 
 ## Testing
 
