@@ -127,7 +127,9 @@ RLS is both enabled and forced. The anonymous role has no contact-table privileg
 npm test
 ```
 
-**TODO:** Document the automated validation tests and include passing output.
+The automated validation suite verifies that valid contacts are trimmed and normalized, empty optional fields become `null`, blank names fail with a clear message, and priorities outside `high`, `medium`, or `low` are rejected. Zod provides immediate application feedback, while Postgres `CHECK` and `NOT NULL` constraints enforce the critical rules even if browser validation is bypassed.
+
+**TODO:** Add a screenshot of the final passing test output to the grading evidence.
 
 ## Deployment
 
