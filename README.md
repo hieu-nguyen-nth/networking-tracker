@@ -40,7 +40,21 @@ User -> Next.js UI -> Neon JS client -> Neon Data API -> RLS -> Neon Postgres
                      Neon Managed Better Auth supplies the authenticated user
 ```
 
-The project separates interface components, validation, authentication, and contact data-access logic. **TODO:** Update this section with the final folder structure and request flow.
+The project separates routing, shared interface components, configuration, infrastructure, and feature logic:
+
+```text
+src/
+├── app/                  # Next.js routes, layout, and global providers
+├── components/ui/        # Reusable presentation components
+├── config/               # Browser-safe environment configuration
+├── features/
+│   ├── account/          # Current-user profile and account behavior
+│   ├── auth/             # Authentication providers, screens, and controls
+│   └── contacts/         # Contact UI, validation, types, and data access
+└── lib/neon/             # Unified Neon client and generated database types
+```
+
+Route files remain intentionally thin and compose feature components rather than containing authentication, database, or form logic.
 
 ## Local Setup
 
