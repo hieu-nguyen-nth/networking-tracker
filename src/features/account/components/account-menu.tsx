@@ -30,7 +30,7 @@ export function AccountMenu() {
   }
 
   return (
-    <div className="flex flex-wrap items-center justify-end gap-3">
+    <div className="flex flex-wrap items-center justify-end gap-2">
       <div className="min-w-0 text-right">
         <p className="truncate text-sm font-medium text-[#191918]">
           {session.user.name || "Your account"}
@@ -43,7 +43,7 @@ export function AccountMenu() {
         ) : null}
       </div>
       <button
-        className="min-h-11 border border-[#C9C8BD] bg-transparent px-4 py-2 text-xs font-medium uppercase tracking-[0.12em] text-[#191918] transition-colors hover:bg-[#ECEBE0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A71D31] disabled:cursor-wait disabled:opacity-60"
+        className="min-h-8 bg-transparent px-2 py-1 text-[11px] font-medium tracking-normal text-[#75756F] transition-colors hover:bg-[#ECEBE0] hover:text-[#191918] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A71D31] disabled:cursor-wait disabled:opacity-60"
         disabled={isSigningOut}
         onClick={handleSignOut}
         type="button"

@@ -2,8 +2,6 @@
 
 A secure, full-stack networking tracker for maintaining relationships with people you meet at Berkeley. Authenticated users can create, view, edit, delete, sort, and filter their own contacts. Neon Postgres provides persistent storage, Neon Managed Better Auth handles authentication, and Row Level Security prevents users from accessing contacts they do not own.
 
-> This README is being completed alongside the application. Sections marked **TODO** will be updated with verified production details and evidence before submission.
-
 ## Live Application
 
 [Open the live Berkeley Networking Tracker](https://networking-tracker-iota-mauve.vercel.app)
@@ -12,7 +10,14 @@ The production deployment was verified on September 7, 2026. The public homepage
 
 ## Product Walkthrough
 
-**TODO:** Add screenshots or a short walkthrough covering sign-in, sign-out, contact CRUD, refresh persistence, invalid input, and two-user isolation.
+1. Open the live application and choose **Create account** or **Sign in**. After authentication, the app opens the private contacts dashboard and identifies the active account in the header.
+2. Choose **Add contact**, complete the contact details, select a priority, and save. The new contact appears with a success message and remains present after a full browser refresh because it is stored in Neon Postgres.
+3. Use the search box to search across contact details, narrow the list by priority, or change the sort order. A clear no-results panel provides a one-click way to clear filters.
+4. Choose **Edit** to update a saved contact. Choose **Delete** to display a confirmation before permanently deleting it.
+5. Submitting a blank name produces the field-level message `Name is required.` Invalid priority values are rejected by application validation and by a database constraint.
+6. Use **Sign out** to end the session. A signed-out visitor cannot open the contacts dashboard and is sent to the authentication flow.
+
+A dated record of the local checks, automated test result, persistence check, and two-account isolation procedure is available in [Grading evidence](docs/evidence/verification.md).
 
 ## Features
 
@@ -80,7 +85,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Environment Variables
 
-The application will document required variable names in `.env.example`. Real credentials belong only in `.env.local` and Vercel's encrypted environment settings.
+Required variable names are documented in `.env.example`. Real credentials belong only in `.env.local` and Vercel's encrypted environment settings.
 
 ```env
 NEXT_PUBLIC_NEON_AUTH_URL=
@@ -91,7 +96,7 @@ NEXT_PUBLIC_NEON_DATA_API_URL=
 
 ## Database Schema
 
-The `contacts` table will contain:
+The `contacts` table contains:
 
 | Column | Type | Purpose |
 | --- | --- | --- |
@@ -140,7 +145,7 @@ npm test
 
 The automated validation suite verifies that valid contacts are trimmed and normalized, empty optional fields become `null`, blank names fail with a clear message, and priorities outside `high`, `medium`, or `low` are rejected. Zod provides immediate application feedback, while Postgres `CHECK` and `NOT NULL` constraints enforce the critical rules even if browser validation is bypassed.
 
-**TODO:** Add a screenshot of the final passing test output to the grading evidence.
+Latest verified result: **2 test files passed, 8 tests passed** on September 7, 2026. The complete result is recorded in [Grading evidence](docs/evidence/verification.md#automated-test-output).
 
 ## Deployment
 
@@ -166,10 +171,12 @@ Production URL: [https://networking-tracker-iota-mauve.vercel.app](https://netwo
 ## Grading Evidence
 
 - [x] Public Vercel application URL
-- [ ] Sign-in and sign-out evidence
-- [ ] Create, edit, delete, and refresh-persistence evidence
-- [ ] Invalid-input evidence
-- [ ] Passing automated test output
+- [x] Sign-in and sign-out verification
+- [x] Create, edit, delete, and refresh-persistence verification
+- [x] Invalid-input verification
+- [x] Passing automated test output
 - [x] Two-account privacy-test evidence
 - [x] Schema and RLS explanation
 - [x] Confirmation that no secrets are committed
+
+See the complete [verification record](docs/evidence/verification.md), which contains no passwords, session tokens, connection strings, or private environment values.

@@ -16,6 +16,15 @@ const priorityClasses = {
   low: "bg-[#EFF3EA] text-[#496344] ring-[#BFCBB8]",
 } as const;
 
+function formatUpdatedDate(value: string) {
+  const date = new Date(value);
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const year = date.getUTCFullYear();
+
+  return `${month}/${day}/${year}`;
+}
+
 export function ContactCard({ contact, onDelete, onEdit }: ContactCardProps) {
   const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -50,14 +59,14 @@ export function ContactCard({ contact, onDelete, onEdit }: ContactCardProps) {
 
       <dl className="mt-5 grid gap-4 text-sm">
         <div>
-          <dt className="text-xs uppercase tracking-[0.12em] text-[#75756F]">Where you met</dt>
-          <dd className="mt-1 text-[#474744]">
+          <dt className="text-sm font-medium tracking-normal text-[#474744]">Where you met</dt>
+          <dd className="mt-1 font-normal tracking-normal text-[#75756F]">
             {contact.where_met || "Not added"}
           </dd>
         </div>
         <div>
-          <dt className="text-xs uppercase tracking-[0.12em] text-[#75756F]">Notes</dt>
-          <dd className="mt-1 whitespace-pre-wrap text-[#474744]">
+          <dt className="text-sm font-medium tracking-normal text-[#474744]">Notes</dt>
+          <dd className="mt-1 whitespace-pre-wrap font-normal tracking-normal text-[#75756F]">
             {contact.notes || "No notes yet"}
           </dd>
         </div>
@@ -88,21 +97,26 @@ export function ContactCard({ contact, onDelete, onEdit }: ContactCardProps) {
           </div>
         </div>
       ) : (
-        <div className="mt-5 flex gap-2 border-t border-[#E3E2D8] pt-4">
-          <button
-            className="min-h-10 border border-[#C9C8BD] px-4 py-2 text-xs font-medium uppercase tracking-[0.1em] text-[#191918] hover:bg-[#FAFAF5]"
-            onClick={() => onEdit(contact)}
-            type="button"
-          >
-            Edit
-          </button>
-          <button
-            className="min-h-10 px-4 py-2 text-xs font-medium uppercase tracking-[0.1em] text-[#A71D31] hover:bg-[#F7EDEF]"
-            onClick={() => setIsConfirmingDelete(true)}
-            type="button"
-          >
-            Delete
-          </button>
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-[#E3E2D8] pt-3">
+          <p className="text-xs font-normal tracking-normal text-[#75756F]">
+            Updated {formatUpdatedDate(contact.updated_at)}
+          </p>
+          <div className="flex items-center justify-end gap-1">
+            <button
+              className="min-h-9 border border-[#C9C8BD] px-3 py-1.5 text-sm font-medium tracking-normal text-[#191918] hover:bg-[#FAFAF5] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A71D31]"
+              onClick={() => onEdit(contact)}
+              type="button"
+            >
+              Edit
+            </button>
+            <button
+              className="min-h-9 px-3 py-1.5 text-sm font-medium tracking-normal text-[#A71D31] hover:bg-[#F7EDEF] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A71D31]"
+              onClick={() => setIsConfirmingDelete(true)}
+              type="button"
+            >
+              Delete
+            </button>
+          </div>
         </div>
       )}
     </article>

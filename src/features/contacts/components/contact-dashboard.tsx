@@ -145,9 +145,7 @@ export function ContactDashboard() {
           </p>
         ) : null}
 
-        <div
-          className={`mt-6 grid items-start gap-6 ${editor.mode === "closed" ? "" : "lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.75fr)]"}`}
-        >
+        <div className="mt-6 grid items-start gap-6">
           <div>
             {status === "loading" ? (
               <section

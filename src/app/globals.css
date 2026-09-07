@@ -18,14 +18,14 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-inter);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Inter, Arial, sans-serif;
+  font-family: var(--font-inter), Inter, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
 }
@@ -46,4 +46,16 @@ textarea {
 button,
 a {
   -webkit-tap-highlight-color: transparent;
+}
+
+select {
+  color-scheme: light;
+}
+
+select option {
+  background-color: var(--paper);
+  color: var(--body-ink);
+  font-family: var(--font-inter), Inter, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
 }
