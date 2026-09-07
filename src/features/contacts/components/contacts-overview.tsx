@@ -1,3 +1,5 @@
+import { AuthEntryActions } from "@/features/auth/components/auth-entry-actions";
+
 const capabilities = [
   "Private contacts for every account",
   "Create, edit, delete, sort, and filter",
@@ -17,6 +19,7 @@ export function ContactsOverview() {
         A secure place to remember who you met, what they do, and when to reach
         out next.
       </p>
+      <AuthEntryActions />
       <ul className="mt-8 grid gap-3 text-sm text-slate-700 sm:grid-cols-3">
         {capabilities.map((capability) => (
           <li
@@ -27,9 +30,6 @@ export function ContactsOverview() {
           </li>
         ))}
       </ul>
-      <p className="mt-8 text-sm text-slate-500">
-        Authentication and the contact dashboard are the next build step.
-      </p>
     </section>
   );
 }
