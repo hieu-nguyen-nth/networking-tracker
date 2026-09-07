@@ -6,7 +6,9 @@ A secure, full-stack networking tracker for maintaining relationships with peopl
 
 ## Live Application
 
-**TODO:** Add the public Vercel URL after deployment.
+[Open the live Berkeley Networking Tracker](https://networking-tracker-iota-mauve.vercel.app)
+
+The production deployment was verified on September 7, 2026. The public homepage and sign-up route both return successfully, and the production alias is registered as a trusted Neon Auth origin.
 
 ## Product Walkthrough
 
@@ -67,7 +69,7 @@ Route files remain intentionally thin and compose feature components rather than
 ### Installation
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/hieu-nguyen-nth/networking-tracker.git
 cd networking-tracker
 npm install
 cp .env.example .env.local
@@ -75,8 +77,6 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
-
-**TODO:** Replace the repository placeholder and document any additional setup commands.
 
 ## Environment Variables
 
@@ -144,9 +144,15 @@ The automated validation suite verifies that valid contacts are trimmed and norm
 
 ## Deployment
 
-The application will be deployed from this public GitHub repository to Vercel. Production environment variables will be configured in Vercel, and the deployed domain will be registered as a trusted Neon Auth origin.
+The application is deployed from this public GitHub repository to Vercel. To reproduce the deployment:
 
-**TODO:** Add the final deployment procedure and public URL.
+1. Create or link a Vercel project from the repository root.
+2. Add `NEXT_PUBLIC_NEON_AUTH_URL` and `NEXT_PUBLIC_NEON_DATA_API_URL` to the Vercel Production environment. These HTTPS endpoints are intentionally browser-safe; do not upload `DATABASE_URL`, cookie secrets, or other server credentials.
+3. Deploy the project to production with `vercel deploy --prod` or through the connected Git repository.
+4. Add the stable Vercel origin to the production branch's Neon Auth trusted domains.
+5. Open the public homepage and `/auth/sign-up` in a fresh browser session, then verify authentication and the contact workflow.
+
+Production URL: [https://networking-tracker-iota-mauve.vercel.app](https://networking-tracker-iota-mauve.vercel.app)
 
 ## Known Limitations and Future Improvements
 
@@ -154,16 +160,16 @@ The application will be deployed from this public GitHub repository to Vercel. P
 - No administrator dashboard
 - No bulk import or export
 - No AI functionality
-
-**TODO:** Add limitations discovered during final verification and realistic next improvements.
+- Contact search and sorting currently run in the browser, which is appropriate for this assignment-sized data set; a larger product would add server pagination and indexed search.
+- Future improvements would include follow-up reminders, CSV import/export, and expanded end-to-end browser automation.
 
 ## Grading Evidence
 
-- [ ] Public Vercel application URL
+- [x] Public Vercel application URL
 - [ ] Sign-in and sign-out evidence
 - [ ] Create, edit, delete, and refresh-persistence evidence
 - [ ] Invalid-input evidence
 - [ ] Passing automated test output
 - [x] Two-account privacy-test evidence
 - [x] Schema and RLS explanation
-- [ ] Confirmation that no secrets are committed
+- [x] Confirmation that no secrets are committed
