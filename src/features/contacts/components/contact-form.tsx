@@ -81,7 +81,7 @@ export function ContactForm({ contact, onCancel, onSave }: ContactFormProps) {
   }
 
   return (
-    <section className="border border-[#E3E2D8] bg-[#F4F4EB] p-6 sm:p-8">
+    <section className="order-first border border-[#E3E2D8] bg-[#F4F4EB] p-6 sm:p-8 lg:order-last">
       <div className="mb-6">
         <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#A71D31]">
           {contact ? "Edit contact" : "New contact"}
@@ -91,26 +91,27 @@ export function ContactForm({ contact, onCancel, onSave }: ContactFormProps) {
         </h2>
       </div>
 
-      <form className="grid gap-5" noValidate onSubmit={handleSubmit}>
-        <label className="grid gap-2 text-sm text-[#474744]">
-          Name <span className="text-[#A71D31]">*</span>
-          <input
-            aria-describedby={fieldErrors.name ? "name-error" : undefined}
-            aria-invalid={Boolean(fieldErrors.name)}
-            autoComplete="name"
-            className="min-h-11 border border-[#C9C8BD] bg-[#FAFAF5] px-3 py-2 text-[#191918] outline-none transition-colors placeholder:text-[#8B8B84] focus:border-[#A71D31] focus:ring-2 focus:ring-[#EAD1D6]"
-            onChange={(event) => updateField("name", event.target.value)}
-            placeholder="e.g. Maya Chen"
-            value={draft.name}
-          />
-          {fieldErrors.name ? (
-            <span className="text-sm text-[#A71D31]" id="name-error">
-              {fieldErrors.name}
+      <form className="grid gap-4" noValidate onSubmit={handleSubmit}>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="grid content-start gap-2 text-sm text-[#474744]">
+            <span>
+              Name <span className="text-[#A71D31]">*</span>
             </span>
-          ) : null}
-        </label>
-
-        <div className="grid gap-5 sm:grid-cols-2">
+            <input
+              aria-describedby={fieldErrors.name ? "name-error" : undefined}
+              aria-invalid={Boolean(fieldErrors.name)}
+              autoComplete="name"
+              className="min-h-11 border border-[#C9C8BD] bg-[#FAFAF5] px-3 py-2 text-[#191918] outline-none transition-colors placeholder:text-[#8B8B84] focus:border-[#A71D31] focus:ring-2 focus:ring-[#EAD1D6]"
+              onChange={(event) => updateField("name", event.target.value)}
+              placeholder="e.g. Maya Chen"
+              value={draft.name}
+            />
+            {fieldErrors.name ? (
+              <span className="text-sm text-[#A71D31]" id="name-error">
+                {fieldErrors.name}
+              </span>
+            ) : null}
+          </label>
           <label className="grid gap-2 text-sm text-[#474744]">
             Company
             <input
@@ -121,6 +122,9 @@ export function ContactForm({ contact, onCancel, onSave }: ContactFormProps) {
               value={draft.company}
             />
           </label>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
           <label className="grid gap-2 text-sm text-[#474744]">
             Role
             <input
@@ -131,45 +135,46 @@ export function ContactForm({ contact, onCancel, onSave }: ContactFormProps) {
               value={draft.role}
             />
           </label>
+          <label className="grid gap-2 text-sm text-[#474744]">
+            Where you met
+            <input
+              className="min-h-11 border border-[#C9C8BD] bg-[#FAFAF5] px-3 py-2 text-[#191918] outline-none transition-colors placeholder:text-[#8B8B84] focus:border-[#A71D31] focus:ring-2 focus:ring-[#EAD1D6]"
+              onChange={(event) => updateField("where_met", event.target.value)}
+              placeholder="e.g. Haas networking night"
+              value={draft.where_met}
+            />
+          </label>
         </div>
 
-        <label className="grid gap-2 text-sm text-[#474744]">
-          Where you met
-          <input
-            className="min-h-11 border border-[#C9C8BD] bg-[#FAFAF5] px-3 py-2 text-[#191918] outline-none transition-colors placeholder:text-[#8B8B84] focus:border-[#A71D31] focus:ring-2 focus:ring-[#EAD1D6]"
-            onChange={(event) => updateField("where_met", event.target.value)}
-            placeholder="e.g. Haas networking night"
-            value={draft.where_met}
-          />
-        </label>
+        <div className="grid gap-4 sm:grid-cols-[160px_minmax(0,1fr)]">
+          <label className="grid content-start gap-2 text-sm text-[#474744]">
+            Priority
+            <select
+              className="min-h-11 border border-[#C9C8BD] bg-[#FAFAF5] px-3 py-2 text-[#191918] outline-none transition-colors focus:border-[#A71D31] focus:ring-2 focus:ring-[#EAD1D6]"
+              onChange={(event) =>
+                updateField(
+                  "priority",
+                  event.target.value as ContactDraft["priority"],
+                )
+              }
+              value={draft.priority}
+            >
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </label>
 
-        <label className="grid gap-2 text-sm text-[#474744]">
-          Priority
-          <select
-            className="min-h-11 border border-[#C9C8BD] bg-[#FAFAF5] px-3 py-2 text-[#191918] outline-none transition-colors focus:border-[#A71D31] focus:ring-2 focus:ring-[#EAD1D6]"
-            onChange={(event) =>
-              updateField(
-                "priority",
-                event.target.value as ContactDraft["priority"],
-              )
-            }
-            value={draft.priority}
-          >
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
-          </select>
-        </label>
-
-        <label className="grid gap-2 text-sm text-[#474744]">
-          Notes
-          <textarea
-            className="min-h-28 resize-y border border-[#C9C8BD] bg-[#FAFAF5] px-3 py-2 text-[#191918] outline-none transition-colors placeholder:text-[#8B8B84] focus:border-[#A71D31] focus:ring-2 focus:ring-[#EAD1D6]"
-            onChange={(event) => updateField("notes", event.target.value)}
-            placeholder="What did you discuss? What should you remember?"
-            value={draft.notes}
-          />
-        </label>
+          <label className="grid gap-2 text-sm text-[#474744]">
+            Notes
+            <textarea
+              className="min-h-24 resize-y border border-[#C9C8BD] bg-[#FAFAF5] px-3 py-2 text-[#191918] outline-none transition-colors placeholder:text-[#8B8B84] focus:border-[#A71D31] focus:ring-2 focus:ring-[#EAD1D6]"
+              onChange={(event) => updateField("notes", event.target.value)}
+              placeholder="What did you discuss? What should you remember?"
+              value={draft.notes}
+            />
+          </label>
+        </div>
 
         {formError ? (
           <p

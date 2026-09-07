@@ -119,7 +119,18 @@ Neon Managed Better Auth identifies the signed-in user. The `contacts.user_id` c
 | `contacts_update_own` | `UPDATE` | Matching `USING` and `WITH CHECK` rules |
 | `contacts_delete_own` | `DELETE` | `USING (auth.user_id() = user_id)` |
 
-RLS is both enabled and forced. The anonymous role has no contact-table privileges; the authenticated role receives CRUD privileges subject to these policies. Database metadata verification confirms all four policies are active. **TODO:** Add the two-real-account test results after the authentication UI is complete.
+RLS is both enabled and forced. The anonymous role has no contact-table privileges; the authenticated role receives CRUD privileges subject to these policies. Database metadata verification confirms all four policies are active.
+
+### Two-account privacy verification
+
+On September 7, 2026, the ownership boundary was manually verified with two real Neon Auth accounts:
+
+1. Account A created a contact and could see only Account A's contact.
+2. Account B created a different contact and could see only Account B's contact.
+3. Switching between the accounts confirmed that neither account could read the other account's contact through the application.
+4. A read-only database check independently confirmed two Auth users, two contact rows, and two distinct `user_id` owners.
+
+Because update and delete use the same ownership predicate—and updates also use `WITH CHECK`—the database applies that identity boundary to reads, edits, ownership changes, and deletion rather than relying on hidden frontend controls.
 
 ## Testing
 
@@ -153,6 +164,6 @@ The application will be deployed from this public GitHub repository to Vercel. P
 - [ ] Create, edit, delete, and refresh-persistence evidence
 - [ ] Invalid-input evidence
 - [ ] Passing automated test output
-- [ ] Two-account privacy-test evidence
-- [ ] Schema and RLS explanation
+- [x] Two-account privacy-test evidence
+- [x] Schema and RLS explanation
 - [ ] Confirmation that no secrets are committed

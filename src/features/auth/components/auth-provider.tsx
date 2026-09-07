@@ -16,6 +16,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   return (
     <NeonAuthUIProvider
       authClient={neonClient.auth}
+      defaultTheme="light"
       Link={Link}
       navigate={router.push}
       replace={router.replace}

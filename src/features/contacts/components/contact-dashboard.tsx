@@ -94,7 +94,7 @@ export function ContactDashboard() {
 
   return (
     <main className="min-h-screen bg-[#FAFAF5] px-5 py-6 text-[#191918] sm:px-8 lg:py-10">
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-6xl">
         <header className="flex flex-col gap-5 border-b border-[#E3E2D8] pb-7 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#A71D31]">
@@ -107,7 +107,7 @@ export function ContactDashboard() {
           <AccountMenu />
         </header>
 
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="text-xl font-medium tracking-[-0.02em]">People in your network</h2>
             <p className="mt-1 text-sm text-[#75756F]">

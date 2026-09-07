@@ -29,15 +29,39 @@ export function AuthScreen({ path }: AuthScreenProps) {
         <p className="text-sm text-[#75756F]">Secure by design with Neon.</p>
       </section>
 
-      <section className="flex min-h-screen items-center justify-center px-6 py-12">
-        <div className="w-full max-w-md">
+      <section className="flex min-h-screen items-start justify-center px-5 py-8 sm:px-8 lg:items-center lg:py-12">
+        <div className="w-full max-w-lg">
           <Link
-            className="mb-8 inline-flex text-sm text-[#474744] hover:text-[#A71D31] lg:hidden"
+            className="mb-6 inline-flex text-sm text-[#474744] hover:text-[#A71D31] lg:hidden"
             href="/"
           >
             ← Berkeley Networking Tracker
           </Link>
-          <AuthView path={path} redirectTo="/dashboard" />
+          <AuthView
+            classNames={{
+              base:
+                "max-w-none border-[#E3E2D8] bg-[#F4F4EB] text-[#191918] shadow-none rounded-[2px] py-7",
+              content: "px-6 sm:px-8",
+              description: "text-[#75756F]",
+              footer: "px-6 sm:px-8",
+              footerLink: "text-[#A71D31] hover:text-[#851526]",
+              header: "px-6 sm:px-8",
+              title: "font-medium tracking-[-0.03em] text-[#191918]",
+              form: {
+                error: "text-[#A71D31]",
+                forgotPasswordLink: "text-[#A71D31] hover:text-[#851526]",
+                input:
+                  "min-h-11 rounded-[2px] border-[#C9C8BD] bg-[#FAFAF5] text-[#191918] shadow-none focus-visible:border-[#A71D31] focus-visible:ring-[#EAD1D6]",
+                label: "text-[#474744]",
+                primaryButton:
+                  "min-h-11 rounded-[2px] bg-[#A71D31] text-white shadow-none hover:bg-[#851526]",
+                secondaryButton:
+                  "min-h-11 rounded-[2px] border-[#C9C8BD] bg-[#FAFAF5] text-[#191918] shadow-none hover:bg-[#ECEBE0]",
+              },
+            }}
+            path={path}
+            redirectTo="/dashboard"
+          />
         </div>
       </section>
     </main>

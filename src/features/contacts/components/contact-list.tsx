@@ -43,7 +43,7 @@ export function ContactList({
     }
 
     return (
-      <section className="border border-[#E3E2D8] bg-[#F4F4EB] p-10 text-center sm:p-14">
+      <section className="border border-[#E3E2D8] bg-[#F4F4EB] p-8 text-center sm:p-12">
         <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#A71D31]">Your network</p>
         <h2 className="mt-3 text-2xl font-medium tracking-[-0.03em]">No contacts yet</h2>
         <p className="mx-auto mt-4 max-w-lg text-[#474744]">
