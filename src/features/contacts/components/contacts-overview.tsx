@@ -8,22 +8,22 @@ const capabilities = [
 
 export function ContactsOverview() {
   return (
-    <section className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-12">
-      <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-700">
+    <section className="border border-[#E3E2D8] bg-[#F4F4EB] p-7 sm:p-12 lg:p-16">
+      <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#A71D31]">
         Berkeley Networking Tracker
       </p>
-      <h1 className="mt-4 max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl">
+      <h1 className="mt-6 max-w-4xl text-4xl font-medium leading-[1.04] tracking-[-0.04em] sm:text-6xl">
         Stay connected with the people who shape your Berkeley experience.
       </h1>
-      <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+      <p className="mt-6 max-w-2xl text-lg leading-8 text-[#474744]">
         A secure place to remember who you met, what they do, and when to reach
         out next.
       </p>
       <AuthEntryActions />
-      <ul className="mt-8 grid gap-3 text-sm text-slate-700 sm:grid-cols-3">
+      <ul className="mt-12 grid border border-[#E3E2D8] text-sm text-[#474744] sm:grid-cols-3">
         {capabilities.map((capability) => (
           <li
-            className="rounded-2xl border border-slate-200 bg-slate-50 p-4"
+            className="border-b border-[#E3E2D8] bg-[#ECEBE0] p-5 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0"
             key={capability}
           >
             {capability}

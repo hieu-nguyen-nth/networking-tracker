@@ -9,7 +9,7 @@ export function AuthEntryActions() {
 
   if (isPending) {
     return (
-      <p aria-live="polite" className="mt-8 text-sm text-slate-500">
+      <p aria-live="polite" className="mt-8 text-sm text-[#75756F]">
         Checking your session…
       </p>
     );
@@ -18,7 +18,7 @@ export function AuthEntryActions() {
   if (session) {
     return (
       <Link
-        className="mt-8 inline-flex min-h-11 items-center justify-center rounded-xl bg-blue-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+        className="mt-8 inline-flex min-h-11 items-center justify-center bg-[#A71D31] px-5 py-3 text-xs font-medium uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#851526] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A71D31]"
         href="/dashboard"
       >
         Open your contacts
@@ -29,13 +29,13 @@ export function AuthEntryActions() {
   return (
     <div className="mt-8 flex flex-col gap-3 sm:flex-row">
       <Link
-        className="inline-flex min-h-11 items-center justify-center rounded-xl bg-blue-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+        className="inline-flex min-h-11 items-center justify-center bg-[#A71D31] px-5 py-3 text-xs font-medium uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#851526] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A71D31]"
         href="/auth/sign-up"
       >
         Create an account
       </Link>
       <Link
-        className="inline-flex min-h-11 items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 transition hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+        className="inline-flex min-h-11 items-center justify-center border border-[#C9C8BD] bg-transparent px-5 py-3 text-xs font-medium uppercase tracking-[0.14em] text-[#191918] transition-colors hover:bg-[#ECEBE0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A71D31]"
         href="/auth/sign-in"
       >
         Sign in

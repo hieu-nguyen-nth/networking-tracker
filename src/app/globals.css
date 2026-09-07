@@ -2,8 +2,17 @@
 @import "@neondatabase/auth-ui/tailwind";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #fafaf5;
+  --panel: #f4f4eb;
+  --panel-featured: #ecebe0;
+  --heading-ink: #191918;
+  --body-ink: #474744;
+  --muted-ink: #75756f;
+  --brand: #a71d31;
+  --brand-hover: #851526;
+  --hairline: #e3e2d8;
+  --background: var(--paper);
+  --foreground: var(--heading-ink);
 }
 
 @theme inline {
@@ -13,15 +22,28 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Inter, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+::selection {
+  background: #ead1d6;
+  color: var(--heading-ink);
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  border-radius: 2px;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
 }

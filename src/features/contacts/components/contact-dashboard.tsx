@@ -68,14 +68,14 @@ export function ContactDashboard() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 px-5 py-6 text-slate-950 sm:px-8">
-      <div className="mx-auto max-w-6xl">
-        <header className="flex flex-col gap-5 border-b border-slate-200 pb-6 sm:flex-row sm:items-center sm:justify-between">
+    <main className="min-h-screen bg-[#FAFAF5] px-5 py-6 text-[#191918] sm:px-8 lg:py-10">
+      <div className="mx-auto max-w-7xl">
+        <header className="flex flex-col gap-5 border-b border-[#E3E2D8] pb-7 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-700">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#A71D31]">
               Berkeley Networking Tracker
             </p>
-            <h1 className="mt-2 text-3xl font-semibold tracking-tight">
+            <h1 className="mt-3 text-4xl font-medium tracking-[-0.04em]">
               Your contacts
             </h1>
           </div>
@@ -84,8 +84,8 @@ export function ContactDashboard() {
 
         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-xl font-semibold">People in your network</h2>
-            <p className="mt-1 text-sm text-slate-600">
+            <h2 className="text-xl font-medium tracking-[-0.02em]">People in your network</h2>
+            <p className="mt-1 text-sm text-[#75756F]">
               {status === "ready"
                 ? `${contacts.length} ${contacts.length === 1 ? "contact" : "contacts"}`
                 : "Your private contact list"}
@@ -93,7 +93,7 @@ export function ContactDashboard() {
           </div>
           {editor.mode === "closed" ? (
             <button
-              className="min-h-11 rounded-xl bg-blue-700 px-5 py-2 text-sm font-semibold text-white transition hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+              className="min-h-11 bg-[#A71D31] px-5 py-2 text-xs font-medium uppercase tracking-[0.14em] text-white transition-colors hover:bg-[#851526] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A71D31]"
               onClick={openCreateForm}
               type="button"
             >
@@ -105,7 +105,7 @@ export function ContactDashboard() {
         {notice ? (
           <p
             aria-live="polite"
-            className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-medium text-emerald-900"
+            className="mt-6 border border-[#BFCBB8] bg-[#EFF3EA] p-4 text-sm text-[#30442C]"
           >
             {notice}
           </p>
@@ -114,7 +114,7 @@ export function ContactDashboard() {
         {actionError ? (
           <p
             aria-live="polite"
-            className="mt-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-900"
+            className="mt-6 border border-[#D7AAB1] bg-[#F7EDEF] p-4 text-sm text-[#711524]"
           >
             {actionError}
           </p>
@@ -128,22 +128,22 @@ export function ContactDashboard() {
               <section
                 aria-busy="true"
                 aria-live="polite"
-                className="rounded-3xl border border-slate-200 bg-white p-10 text-center"
+                className="border border-[#E3E2D8] bg-[#F4F4EB] p-10 text-center"
               >
-                <p className="font-medium text-slate-700">
+                <p className="text-[#474744]">
                   Loading your contacts…
                 </p>
               </section>
             ) : null}
 
             {status === "error" ? (
-              <section className="rounded-3xl border border-red-200 bg-red-50 p-8 text-center">
-                <h3 className="text-lg font-semibold text-red-950">
+              <section className="border border-[#D7AAB1] bg-[#F7EDEF] p-8 text-center">
+                <h3 className="text-lg font-medium text-[#711524]">
                   Contacts could not be loaded
                 </h3>
-                <p className="mt-2 text-sm text-red-800">{loadError}</p>
+                <p className="mt-2 text-sm text-[#8A2637]">{loadError}</p>
                 <button
-                  className="mt-5 min-h-11 rounded-xl bg-red-700 px-5 py-2 text-sm font-semibold text-white hover:bg-red-800"
+                  className="mt-5 min-h-11 bg-[#A71D31] px-5 py-2 text-xs font-medium uppercase tracking-[0.14em] text-white hover:bg-[#851526]"
                   onClick={() => void reload()}
                   type="button"
                 >

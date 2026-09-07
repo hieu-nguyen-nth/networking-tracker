@@ -81,51 +81,51 @@ export function ContactForm({ contact, onCancel, onSave }: ContactFormProps) {
   }
 
   return (
-    <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <section className="border border-[#E3E2D8] bg-[#F4F4EB] p-6 sm:p-8">
       <div className="mb-6">
-        <p className="text-sm font-semibold uppercase tracking-[0.16em] text-blue-700">
+        <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#A71D31]">
           {contact ? "Edit contact" : "New contact"}
         </p>
-        <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+        <h2 className="mt-3 text-2xl font-medium tracking-[-0.03em]">
           {contact ? `Update ${contact.name}` : "Add someone to your network"}
         </h2>
       </div>
 
       <form className="grid gap-5" noValidate onSubmit={handleSubmit}>
-        <label className="grid gap-2 text-sm font-medium text-slate-800">
-          Name <span className="text-red-700">*</span>
+        <label className="grid gap-2 text-sm text-[#474744]">
+          Name <span className="text-[#A71D31]">*</span>
           <input
             aria-describedby={fieldErrors.name ? "name-error" : undefined}
             aria-invalid={Boolean(fieldErrors.name)}
             autoComplete="name"
-            className="min-h-11 rounded-xl border border-slate-300 px-3 py-2 outline-none transition focus:border-blue-700 focus:ring-2 focus:ring-blue-100"
+            className="min-h-11 border border-[#C9C8BD] bg-[#FAFAF5] px-3 py-2 text-[#191918] outline-none transition-colors placeholder:text-[#8B8B84] focus:border-[#A71D31] focus:ring-2 focus:ring-[#EAD1D6]"
             onChange={(event) => updateField("name", event.target.value)}
             placeholder="e.g. Maya Chen"
             value={draft.name}
           />
           {fieldErrors.name ? (
-            <span className="text-sm text-red-700" id="name-error">
+            <span className="text-sm text-[#A71D31]" id="name-error">
               {fieldErrors.name}
             </span>
           ) : null}
         </label>
 
         <div className="grid gap-5 sm:grid-cols-2">
-          <label className="grid gap-2 text-sm font-medium text-slate-800">
+          <label className="grid gap-2 text-sm text-[#474744]">
             Company
             <input
               autoComplete="organization"
-              className="min-h-11 rounded-xl border border-slate-300 px-3 py-2 outline-none transition focus:border-blue-700 focus:ring-2 focus:ring-blue-100"
+              className="min-h-11 border border-[#C9C8BD] bg-[#FAFAF5] px-3 py-2 text-[#191918] outline-none transition-colors placeholder:text-[#8B8B84] focus:border-[#A71D31] focus:ring-2 focus:ring-[#EAD1D6]"
               onChange={(event) => updateField("company", event.target.value)}
               placeholder="e.g. Berkeley SkyDeck"
               value={draft.company}
             />
           </label>
-          <label className="grid gap-2 text-sm font-medium text-slate-800">
+          <label className="grid gap-2 text-sm text-[#474744]">
             Role
             <input
               autoComplete="organization-title"
-              className="min-h-11 rounded-xl border border-slate-300 px-3 py-2 outline-none transition focus:border-blue-700 focus:ring-2 focus:ring-blue-100"
+              className="min-h-11 border border-[#C9C8BD] bg-[#FAFAF5] px-3 py-2 text-[#191918] outline-none transition-colors placeholder:text-[#8B8B84] focus:border-[#A71D31] focus:ring-2 focus:ring-[#EAD1D6]"
               onChange={(event) => updateField("role", event.target.value)}
               placeholder="e.g. Product designer"
               value={draft.role}
@@ -133,20 +133,20 @@ export function ContactForm({ contact, onCancel, onSave }: ContactFormProps) {
           </label>
         </div>
 
-        <label className="grid gap-2 text-sm font-medium text-slate-800">
+        <label className="grid gap-2 text-sm text-[#474744]">
           Where you met
           <input
-            className="min-h-11 rounded-xl border border-slate-300 px-3 py-2 outline-none transition focus:border-blue-700 focus:ring-2 focus:ring-blue-100"
+            className="min-h-11 border border-[#C9C8BD] bg-[#FAFAF5] px-3 py-2 text-[#191918] outline-none transition-colors placeholder:text-[#8B8B84] focus:border-[#A71D31] focus:ring-2 focus:ring-[#EAD1D6]"
             onChange={(event) => updateField("where_met", event.target.value)}
             placeholder="e.g. Haas networking night"
             value={draft.where_met}
           />
         </label>
 
-        <label className="grid gap-2 text-sm font-medium text-slate-800">
+        <label className="grid gap-2 text-sm text-[#474744]">
           Priority
           <select
-            className="min-h-11 rounded-xl border border-slate-300 bg-white px-3 py-2 outline-none transition focus:border-blue-700 focus:ring-2 focus:ring-blue-100"
+            className="min-h-11 border border-[#C9C8BD] bg-[#FAFAF5] px-3 py-2 text-[#191918] outline-none transition-colors focus:border-[#A71D31] focus:ring-2 focus:ring-[#EAD1D6]"
             onChange={(event) =>
               updateField(
                 "priority",
@@ -161,10 +161,10 @@ export function ContactForm({ contact, onCancel, onSave }: ContactFormProps) {
           </select>
         </label>
 
-        <label className="grid gap-2 text-sm font-medium text-slate-800">
+        <label className="grid gap-2 text-sm text-[#474744]">
           Notes
           <textarea
-            className="min-h-28 resize-y rounded-xl border border-slate-300 px-3 py-2 outline-none transition focus:border-blue-700 focus:ring-2 focus:ring-blue-100"
+            className="min-h-28 resize-y border border-[#C9C8BD] bg-[#FAFAF5] px-3 py-2 text-[#191918] outline-none transition-colors placeholder:text-[#8B8B84] focus:border-[#A71D31] focus:ring-2 focus:ring-[#EAD1D6]"
             onChange={(event) => updateField("notes", event.target.value)}
             placeholder="What did you discuss? What should you remember?"
             value={draft.notes}
@@ -174,7 +174,7 @@ export function ContactForm({ contact, onCancel, onSave }: ContactFormProps) {
         {formError ? (
           <p
             aria-live="polite"
-            className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-800"
+            className="border border-[#D7AAB1] bg-[#F7EDEF] p-3 text-sm text-[#711524]"
           >
             {formError}
           </p>
@@ -182,7 +182,7 @@ export function ContactForm({ contact, onCancel, onSave }: ContactFormProps) {
 
         <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
           <button
-            className="min-h-11 rounded-xl border border-slate-300 px-5 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+            className="min-h-11 border border-[#C9C8BD] px-5 py-2 text-xs font-medium uppercase tracking-[0.12em] text-[#191918] transition-colors hover:bg-[#ECEBE0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A71D31]"
             disabled={isSaving}
             onClick={onCancel}
             type="button"
@@ -190,7 +190,7 @@ export function ContactForm({ contact, onCancel, onSave }: ContactFormProps) {
             Cancel
           </button>
           <button
-            className="min-h-11 rounded-xl bg-blue-700 px-5 py-2 text-sm font-semibold text-white transition hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 disabled:cursor-wait disabled:opacity-60"
+            className="min-h-11 bg-[#A71D31] px-5 py-2 text-xs font-medium uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#851526] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A71D31] disabled:cursor-wait disabled:opacity-60"
             disabled={isSaving}
             type="submit"
           >

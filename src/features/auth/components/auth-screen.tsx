@@ -9,30 +9,30 @@ type AuthScreenProps = Readonly<{
 
 export function AuthScreen({ path }: AuthScreenProps) {
   return (
-    <main className="grid min-h-screen bg-slate-50 lg:grid-cols-[1fr_1.1fr]">
-      <section className="hidden bg-slate-950 p-12 text-white lg:flex lg:flex-col lg:justify-between">
-        <Link className="text-sm font-semibold tracking-wide" href="/">
+    <main className="grid min-h-screen bg-[#FAFAF5] text-[#191918] lg:grid-cols-[0.9fr_1.1fr]">
+      <section className="hidden border-r border-[#E3E2D8] bg-[#ECEBE0] p-12 lg:flex lg:flex-col lg:justify-between">
+        <Link className="text-xs font-medium uppercase tracking-[0.16em]" href="/">
           Berkeley Networking Tracker
         </Link>
         <div className="max-w-lg">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-300">
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#A71D31]">
             Your network, remembered
           </p>
-          <h1 className="mt-4 text-5xl font-semibold tracking-tight">
+          <h1 className="mt-6 text-5xl font-medium leading-[1.05] tracking-[-0.04em]">
             Keep meaningful Berkeley connections within reach.
           </h1>
-          <p className="mt-6 text-lg leading-8 text-slate-300">
+          <p className="mt-6 text-lg leading-8 text-[#474744]">
             Every contact is private to your account and protected by database
             Row Level Security.
           </p>
         </div>
-        <p className="text-sm text-slate-400">Secure by design with Neon.</p>
+        <p className="text-sm text-[#75756F]">Secure by design with Neon.</p>
       </section>
 
       <section className="flex min-h-screen items-center justify-center px-6 py-12">
         <div className="w-full max-w-md">
           <Link
-            className="mb-8 inline-flex text-sm font-medium text-slate-600 hover:text-slate-950 lg:hidden"
+            className="mb-8 inline-flex text-sm text-[#474744] hover:text-[#A71D31] lg:hidden"
             href="/"
           >
             ← Berkeley Networking Tracker

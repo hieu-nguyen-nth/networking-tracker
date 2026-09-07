@@ -11,9 +11,9 @@ type ContactCardProps = Readonly<{
 }>;
 
 const priorityClasses = {
-  high: "bg-red-50 text-red-800 ring-red-200",
-  medium: "bg-amber-50 text-amber-800 ring-amber-200",
-  low: "bg-emerald-50 text-emerald-800 ring-emerald-200",
+  high: "bg-[#F7EDEF] text-[#8A2637] ring-[#D7AAB1]",
+  medium: "bg-[#F5F0DF] text-[#795E1B] ring-[#D8CA9F]",
+  low: "bg-[#EFF3EA] text-[#496344] ring-[#BFCBB8]",
 } as const;
 
 export function ContactCard({ contact, onDelete, onEdit }: ContactCardProps) {
@@ -30,19 +30,19 @@ export function ContactCard({ contact, onDelete, onEdit }: ContactCardProps) {
   }
 
   return (
-    <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+    <article className="border border-[#E3E2D8] bg-[#F4F4EB] p-5 transition-colors hover:bg-[#ECEBE0]">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <h3 className="truncate text-lg font-semibold text-slate-950">
+          <h3 className="truncate text-lg font-medium tracking-[-0.02em] text-[#191918]">
             {contact.name}
           </h3>
-          <p className="mt-1 text-sm text-slate-600">
+          <p className="mt-1 text-sm text-[#75756F]">
             {[contact.role, contact.company].filter(Boolean).join(" at ") ||
               "Role and company not added"}
           </p>
         </div>
         <span
-          className={`rounded-full px-3 py-1 text-xs font-semibold capitalize ring-1 ring-inset ${priorityClasses[contact.priority]}`}
+          className={`rounded-full px-3 py-1 text-xs font-medium capitalize ring-1 ring-inset ${priorityClasses[contact.priority]}`}
         >
           {contact.priority}
         </span>
@@ -50,27 +50,27 @@ export function ContactCard({ contact, onDelete, onEdit }: ContactCardProps) {
 
       <dl className="mt-5 grid gap-4 text-sm">
         <div>
-          <dt className="font-medium text-slate-500">Where you met</dt>
-          <dd className="mt-1 text-slate-800">
+          <dt className="text-xs uppercase tracking-[0.12em] text-[#75756F]">Where you met</dt>
+          <dd className="mt-1 text-[#474744]">
             {contact.where_met || "Not added"}
           </dd>
         </div>
         <div>
-          <dt className="font-medium text-slate-500">Notes</dt>
-          <dd className="mt-1 whitespace-pre-wrap text-slate-800">
+          <dt className="text-xs uppercase tracking-[0.12em] text-[#75756F]">Notes</dt>
+          <dd className="mt-1 whitespace-pre-wrap text-[#474744]">
             {contact.notes || "No notes yet"}
           </dd>
         </div>
       </dl>
 
       {isConfirmingDelete ? (
-        <div className="mt-5 rounded-xl border border-red-200 bg-red-50 p-4">
-          <p className="text-sm font-medium text-red-900">
+        <div className="mt-5 border border-[#D7AAB1] bg-[#F7EDEF] p-4">
+          <p className="text-sm text-[#711524]">
             Delete {contact.name}? This cannot be undone.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
             <button
-              className="min-h-10 rounded-lg bg-red-700 px-4 py-2 text-sm font-semibold text-white hover:bg-red-800 disabled:cursor-wait disabled:opacity-60"
+              className="min-h-10 bg-[#A71D31] px-4 py-2 text-xs font-medium uppercase tracking-[0.1em] text-white hover:bg-[#851526] disabled:cursor-wait disabled:opacity-60"
               disabled={isDeleting}
               onClick={handleDelete}
               type="button"
@@ -78,7 +78,7 @@ export function ContactCard({ contact, onDelete, onEdit }: ContactCardProps) {
               {isDeleting ? "Deleting…" : "Yes, delete"}
             </button>
             <button
-              className="min-h-10 rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-semibold text-red-900 hover:bg-red-100"
+              className="min-h-10 border border-[#D7AAB1] bg-[#FAFAF5] px-4 py-2 text-xs font-medium uppercase tracking-[0.1em] text-[#711524] hover:bg-[#EAD1D6]"
               disabled={isDeleting}
               onClick={() => setIsConfirmingDelete(false)}
               type="button"
@@ -88,16 +88,16 @@ export function ContactCard({ contact, onDelete, onEdit }: ContactCardProps) {
           </div>
         </div>
       ) : (
-        <div className="mt-5 flex gap-2 border-t border-slate-100 pt-4">
+        <div className="mt-5 flex gap-2 border-t border-[#E3E2D8] pt-4">
           <button
-            className="min-h-10 rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-100"
+            className="min-h-10 border border-[#C9C8BD] px-4 py-2 text-xs font-medium uppercase tracking-[0.1em] text-[#191918] hover:bg-[#FAFAF5]"
             onClick={() => onEdit(contact)}
             type="button"
           >
             Edit
           </button>
           <button
-            className="min-h-10 rounded-lg px-4 py-2 text-sm font-semibold text-red-700 hover:bg-red-50"
+            className="min-h-10 px-4 py-2 text-xs font-medium uppercase tracking-[0.1em] text-[#A71D31] hover:bg-[#F7EDEF]"
             onClick={() => setIsConfirmingDelete(true)}
             type="button"
           >

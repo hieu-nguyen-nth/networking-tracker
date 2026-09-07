@@ -32,18 +32,18 @@ export function AccountMenu() {
   return (
     <div className="flex flex-wrap items-center justify-end gap-3">
       <div className="min-w-0 text-right">
-        <p className="truncate text-sm font-semibold text-slate-900">
+        <p className="truncate text-sm font-medium text-[#191918]">
           {session.user.name || "Your account"}
         </p>
-        <p className="truncate text-xs text-slate-500">{session.user.email}</p>
+        <p className="truncate text-xs text-[#75756F]">{session.user.email}</p>
         {errorMessage ? (
-          <p aria-live="polite" className="mt-1 text-xs text-red-700">
+          <p aria-live="polite" className="mt-1 text-xs text-[#A71D31]">
             {errorMessage}
           </p>
         ) : null}
       </div>
       <button
-        className="min-h-11 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 transition hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 disabled:cursor-wait disabled:opacity-60"
+        className="min-h-11 border border-[#C9C8BD] bg-transparent px-4 py-2 text-xs font-medium uppercase tracking-[0.12em] text-[#191918] transition-colors hover:bg-[#ECEBE0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A71D31] disabled:cursor-wait disabled:opacity-60"
         disabled={isSigningOut}
         onClick={handleSignOut}
         type="button"
