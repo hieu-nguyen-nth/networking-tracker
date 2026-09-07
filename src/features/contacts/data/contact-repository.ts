@@ -1,8 +1,7 @@
 import type {
   Contact,
-  ContactInsert,
-  ContactUpdate,
 } from "@/features/contacts/types/contact";
+import type { ContactInput } from "@/features/contacts/validation/contact-schema";
 import { neonClient } from "@/lib/neon/client";
 
 export class ContactDataError extends Error {
@@ -25,7 +24,7 @@ export async function listContacts(): Promise<Contact[]> {
   return data ?? [];
 }
 
-export async function createContact(input: ContactInsert): Promise<Contact> {
+export async function createContact(input: ContactInput): Promise<Contact> {
   const { data, error } = await neonClient
     .from("contacts")
     .insert(input)
@@ -41,7 +40,7 @@ export async function createContact(input: ContactInsert): Promise<Contact> {
 
 export async function updateContact(
   contactId: string,
-  input: ContactUpdate,
+  input: ContactInput,
 ): Promise<Contact> {
   const { data, error } = await neonClient
     .from("contacts")
