@@ -31,14 +31,14 @@ A dated record of the local checks, automated test result, persistence check, an
 
 ## Technology Stack
 
-- **Next.js and React:** Full-stack application framework and user interface
-- **TypeScript:** Static type safety
-- **Tailwind CSS:** Responsive, consistent styling
-- **Neon Postgres:** Persistent relational database
-- **Neon Managed Better Auth:** User authentication
-- **Neon Data API and `@neondatabase/neon-js`:** Authenticated data access
-- **Vitest:** Automated validation tests
-- **Vercel:** Production hosting
+- **Next.js and React:** Provide file-based routing, reusable components, and a production-ready web application in one project.
+- **TypeScript:** Catches mismatched contact and database values before deployment and makes feature boundaries easier to maintain.
+- **Tailwind CSS:** Supplies a consistent design system and responsive layout utilities without scattering separate style sheets across features.
+- **Neon Postgres:** Provides durable relational storage plus constraints, triggers, and Row Level Security close to the data.
+- **Neon Managed Better Auth:** Supplies account creation and session management without implementing password storage in application code.
+- **Neon Data API and `@neondatabase/neon-js`:** Provide authenticated HTTPS data access from the application while allowing Postgres RLS to remain the final authorization boundary.
+- **Vitest:** Runs the validation and contact-view tests quickly in local development and CI.
+- **Vercel:** Hosts Next.js with automatic builds, HTTPS, and environment-variable management.
 
 ## Architecture
 
@@ -46,6 +46,12 @@ A dated record of the local checks, automated test result, persistence check, an
 User -> Next.js UI -> Neon JS client -> Neon Data API -> RLS -> Neon Postgres
                      Neon Managed Better Auth supplies the authenticated user
 ```
+
+- **Frontend:** Next.js App Router pages and React components render the authentication and contact interfaces. Feature code is grouped under `src/features/`.
+- **Backend:** The managed Neon Data API receives authenticated HTTPS queries from the Neon client. Contact validation runs before writes, while database constraints and RLS independently enforce critical rules.
+- **Database:** Neon Postgres stores contact rows, validates names and priorities, updates timestamps through a trigger, and applies ownership policies to every operation.
+- **Authentication:** Neon Managed Better Auth creates accounts, maintains sessions, and supplies the user identity used by `auth.user_id()`.
+- **Hosting:** Vercel builds and serves the Next.js application over HTTPS. Its production environment stores the two public endpoint values; no Postgres connection string is shipped to the browser.
 
 The project separates routing, shared interface components, configuration, infrastructure, and feature logic:
 
@@ -78,9 +84,9 @@ By contrast, `src/config/public-env.ts` contains application runtime configurati
 
 ### Prerequisites
 
-- Node.js
-- npm
-- A Neon project with Managed Better Auth and the Data API enabled
+- Node.js 20 or later and npm
+- A Neon account and project
+- `psql`, which is used internally by `neon psql` when applying migrations
 
 ### Installation
 
@@ -89,10 +95,33 @@ git clone https://github.com/hieu-nguyen-nth/networking-tracker.git
 cd networking-tracker
 npm install
 cp .env.example .env.local
+```
+
+Install the Neon CLI, authenticate, and link the clone to your own Neon project and branch. The checked-in `neon.ts` enables Managed Better Auth and the Data API. `--no-env-pull` prevents the CLI from writing a Postgres connection string into the project.
+
+```bash
+npm install --global neon@latest
+neon login
+neon link --project-id <YOUR_NEON_PROJECT_ID> --branch <YOUR_BRANCH_NAME> --no-env-pull -y
+neon deploy --no-env-pull
+```
+
+Apply the schema first and the security policies second:
+
+```bash
+neon psql <YOUR_BRANCH_NAME> -- -f database/migrations/001_create_contacts.sql
+neon psql <YOUR_BRANCH_NAME> -- -f database/migrations/002_secure_contacts_with_rls.sql
+```
+
+In the Neon Console, copy the branch's HTTPS **Auth URL** and **Data API URL** into `.env.local` as `NEXT_PUBLIC_NEON_AUTH_URL` and `NEXT_PUBLIC_NEON_DATA_API_URL`. These are public service endpoints, not passwords. Do not copy the Postgres connection string into a `NEXT_PUBLIC_` variable.
+
+Start the application:
+
+```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000), create an account, and add a contact to verify the setup.
 
 ## Environment Variables
 
@@ -103,7 +132,7 @@ NEXT_PUBLIC_NEON_AUTH_URL=
 NEXT_PUBLIC_NEON_DATA_API_URL=
 ```
 
-`DATABASE_URL`, `NEON_AUTH_BASE_URL`, cookie secrets, and other secret values must remain server-only if used. Never commit real values.
+This implementation does not require `DATABASE_URL`, `NEON_AUTH_BASE_URL`, or `NEON_AUTH_COOKIE_SECRET` in the Next.js application. If a future server-side feature introduces them, they must remain server-only, must not use the `NEXT_PUBLIC_` prefix, and must never be committed.
 
 ## Database Schema
 
@@ -162,11 +191,13 @@ Latest verified result: **2 test files passed, 9 tests passed** on September 8, 
 
 The application is deployed from this public GitHub repository to Vercel. To reproduce the deployment:
 
-1. Create or link a Vercel project from the repository root.
-2. Add `NEXT_PUBLIC_NEON_AUTH_URL` and `NEXT_PUBLIC_NEON_DATA_API_URL` to the Vercel Production environment. These HTTPS endpoints are intentionally browser-safe; do not upload `DATABASE_URL`, cookie secrets, or other server credentials.
-3. Deploy the project to production with `vercel deploy --prod` or through the connected Git repository.
-4. Add the stable Vercel origin to the production branch's Neon Auth trusted domains.
-5. Open the public homepage and `/auth/sign-up` in a fresh browser session, then verify authentication and the contact workflow.
+1. Complete the Neon setup and both database migrations from **Local Setup** for the intended production branch.
+2. Confirm that Managed Better Auth, the Data API, the `contacts` table, and all four RLS policies are active on that branch.
+3. Import this public GitHub repository into Vercel, leaving the project root and standard Next.js build settings unchanged.
+4. Add `NEXT_PUBLIC_NEON_AUTH_URL` and `NEXT_PUBLIC_NEON_DATA_API_URL` to the Vercel Production environment. These HTTPS endpoints are intentionally browser-safe; do not upload `DATABASE_URL`, cookie secrets, or other server credentials.
+5. Deploy through the connected Git repository or run `vercel deploy --prod` from the repository root.
+6. Add the stable Vercel origin to the production branch's Neon Auth trusted domains.
+7. Open the public homepage and `/auth/sign-up` in a private browser window, then verify sign-up, CRUD, refresh persistence, sorting, filtering, sign-out, and two-account isolation.
 
 Production URL: [https://networking-tracker-iota-mauve.vercel.app](https://networking-tracker-iota-mauve.vercel.app)
 
@@ -178,16 +209,3 @@ Production URL: [https://networking-tracker-iota-mauve.vercel.app](https://netwo
 - No AI functionality
 - Contact search and sorting currently run in the browser, which is appropriate for this assignment-sized data set; a larger product would add server pagination and indexed search.
 - Future improvements would include follow-up reminders, CSV import/export, and expanded end-to-end browser automation.
-
-## Grading Evidence
-
-- [x] Public Vercel application URL
-- [x] Sign-in and sign-out verification
-- [x] Create, edit, delete, and refresh-persistence verification
-- [x] Invalid-input verification
-- [x] Passing automated test output
-- [x] Two-account privacy-test evidence
-- [x] Schema and RLS explanation
-- [x] Confirmation that no secrets are committed
-
-See the complete [verification record](docs/evidence/verification.md), which contains no passwords, session tokens, connection strings, or private environment values.
