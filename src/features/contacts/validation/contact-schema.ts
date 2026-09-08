@@ -18,7 +18,4 @@ export const contactInputSchema = z.object({
   }),
 });
 
-export const contactUpdateSchema = contactInputSchema.partial();
-
 export type ContactInput = z.infer<typeof contactInputSchema>;
-export type ContactUpdateInput = z.infer<typeof contactUpdateSchema>;

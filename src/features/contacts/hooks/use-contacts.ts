@@ -18,35 +18,15 @@ export function useContacts() {
   const [status, setStatus] = useState<ContactsStatus>("loading");
   const [loadError, setLoadError] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
-    setStatus("loading");
-    setLoadError(null);
-
-    try {
-      const savedContacts = await listContacts();
-      setContacts(savedContacts);
-      setStatus("ready");
-    } catch (error) {
-      setLoadError(
-        error instanceof Error
-          ? error.message
-          : "We could not load your contacts.",
-      );
-      setStatus("error");
-    }
-  }, []);
-
-  useEffect(() => {
-    let isActive = true;
-
-    listContacts()
+  const fetchContacts = useCallback((signal?: AbortSignal) => {
+    return listContacts()
       .then((savedContacts) => {
-        if (!isActive) return;
+        if (signal?.aborted) return;
         setContacts(savedContacts);
         setStatus("ready");
       })
       .catch((error: unknown) => {
-        if (!isActive) return;
+        if (signal?.aborted) return;
         setLoadError(
           error instanceof Error
             ? error.message
@@ -54,11 +34,20 @@ export function useContacts() {
         );
         setStatus("error");
       });
-
-    return () => {
-      isActive = false;
-    };
   }, []);
+
+  const load = useCallback(async () => {
+    setStatus("loading");
+    setLoadError(null);
+    await fetchContacts();
+  }, [fetchContacts]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    void fetchContacts(controller.signal);
+
+    return () => controller.abort();
+  }, [fetchContacts]);
 
   const add = useCallback(async (input: ContactInput) => {
     const contact = await createContact(input);

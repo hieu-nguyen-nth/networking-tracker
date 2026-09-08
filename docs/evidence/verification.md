@@ -20,7 +20,7 @@ This record summarizes the checks performed through September 8, 2026. It intent
 | Responsive and accessible UI | The interface uses responsive grids/cards, associated form labels, minimum-size controls, visible keyboard focus styles, text priority labels, accessible custom listboxes, and a mobile-safe contact modal. |
 | Browser runtime | Dashboard reloaded with meaningful content, no framework error overlay, and no application console errors. |
 
-The temporary Phase 15 verification contact was deleted after the walkthrough, leaving the account's original data intact.
+The temporary verification contact was deleted after the walkthrough, leaving the account's original data intact.
 
 ## Automated test output
 
@@ -70,4 +70,4 @@ This boundary is enforced in Postgres rather than by hidden UI controls. The `co
 
 [Open the production deployment](https://networking-tracker-iota-mauve.vercel.app)
 
-The stable production origin is registered as a trusted Neon Auth origin. Full private-window production regression testing is performed in Phase 20.
+The stable production origin is registered as a trusted Neon Auth origin. Full private-window production regression results are not recorded in this document.
