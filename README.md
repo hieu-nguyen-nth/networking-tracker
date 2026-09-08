@@ -17,8 +17,6 @@ The production deployment was verified on September 8, 2026. The public homepage
 5. Submitting a blank name produces the field-level message `Name is required.` Invalid priority values are rejected by application validation and by a database constraint.
 6. Use **Sign out** to end the session. A signed-out visitor cannot open the contacts dashboard and is sent to the authentication flow.
 
-A dated record of the local checks, automated test result, persistence check, and two-account isolation procedure is available in [Grading evidence](docs/evidence/verification.md).
-
 ## Features
 
 - Sign up, sign in, and sign out with Neon Managed Better Auth
@@ -185,7 +183,7 @@ npm test
 
 The automated validation suite verifies that valid contacts are trimmed and normalized, empty optional fields become `null`, blank names fail with a clear message, and priorities outside `high`, `medium`, or `low` are rejected. Zod provides immediate application feedback, while Postgres `CHECK` and `NOT NULL` constraints enforce the critical rules even if browser validation is bypassed.
 
-Latest verified result: **2 test files passed, 9 tests passed** on September 8, 2026. The complete result is recorded in [Grading evidence](docs/evidence/verification.md#automated-test-output).
+Latest verified result: **2 test files passed, 9 tests passed** on September 8, 2026.
 
 ## Deployment
 
