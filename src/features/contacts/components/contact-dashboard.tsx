@@ -1,6 +1,6 @@
 "use client";
 
-import { useDeferredValue, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useState } from "react";
 
 import { AccountMenu } from "@/features/account/components/account-menu";
 import { ContactControls } from "@/features/contacts/components/contact-controls";
@@ -40,6 +40,24 @@ export function ContactDashboard() {
     [contacts, deferredQuery, priority, sort],
   );
   const hasActiveFilters = query.trim().length > 0 || priority !== "all";
+
+  useEffect(() => {
+    if (!notice) return;
+
+    const timeoutId = window.setTimeout(() => setNotice(null), 3500);
+    return () => window.clearTimeout(timeoutId);
+  }, [notice]);
+
+  useEffect(() => {
+    if (editor.mode === "closed") return;
+
+    function closeEditor(event: KeyboardEvent) {
+      if (event.key === "Escape") setEditor({ mode: "closed" });
+    }
+
+    window.addEventListener("keydown", closeEditor);
+    return () => window.removeEventListener("keydown", closeEditor);
+  }, [editor.mode]);
 
   function clearFilters() {
     setQuery("");
@@ -201,16 +219,26 @@ export function ContactDashboard() {
             ) : null}
           </div>
 
-          {editor.mode !== "closed" ? (
-            <ContactForm
-              contact={editor.mode === "edit" ? editor.contact : undefined}
-              key={editor.mode === "edit" ? editor.contact.id : "new-contact"}
-              onCancel={() => setEditor({ mode: "closed" })}
-              onSave={handleSave}
-            />
-          ) : null}
         </div>
       </div>
+
+      {editor.mode !== "closed" ? (
+        <div
+          className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-[#191918]/40 p-4 sm:p-6"
+          onMouseDown={(event) => {
+            if (event.currentTarget === event.target) {
+              setEditor({ mode: "closed" });
+            }
+          }}
+        >
+          <ContactForm
+            contact={editor.mode === "edit" ? editor.contact : undefined}
+            key={editor.mode === "edit" ? editor.contact.id : "new-contact"}
+            onCancel={() => setEditor({ mode: "closed" })}
+            onSave={handleSave}
+          />
+        </div>
+      ) : null}
     </main>
   );
 }

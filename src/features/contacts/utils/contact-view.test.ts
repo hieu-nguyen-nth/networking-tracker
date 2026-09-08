@@ -67,4 +67,23 @@ describe("contact list view", () => {
       "Alex Rivera",
     ]);
   });
+
+  it("sorts recent contacts by their updated date", () => {
+    const changedContacts = contacts.map((contact) =>
+      contact.id === "1"
+        ? { ...contact, updated_at: "2026-09-05T00:00:00.000Z" }
+        : contact,
+    );
+
+    const result = getVisibleContacts(changedContacts, {
+      priority: "all",
+      query: "",
+      sort: "newest",
+    });
+
+    expect(result.map((contact) => contact.name)).toEqual([
+      "Maya Chen",
+      "Alex Rivera",
+    ]);
+  });
 });

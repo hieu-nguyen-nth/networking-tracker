@@ -49,7 +49,7 @@ export function getVisibleContacts(
   return visible.toSorted((left, right) => {
     switch (sort) {
       case "oldest":
-        return left.created_at.localeCompare(right.created_at);
+        return left.updated_at.localeCompare(right.updated_at);
       case "name":
         return collator.compare(left.name, right.name);
       case "company":
@@ -58,7 +58,7 @@ export function getVisibleContacts(
         return priorityRank[left.priority] - priorityRank[right.priority];
       case "newest":
       default:
-        return right.created_at.localeCompare(left.created_at);
+        return right.updated_at.localeCompare(left.updated_at);
     }
   });
 }

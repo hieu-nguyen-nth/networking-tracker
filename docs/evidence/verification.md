@@ -1,6 +1,6 @@
 # Grading Evidence
 
-This record summarizes the checks performed on September 7, 2026. It intentionally contains no passwords, access tokens, database connection strings, cookies, or private environment values.
+This record summarizes the checks performed through September 8, 2026. It intentionally contains no passwords, access tokens, database connection strings, cookies, or private environment values.
 
 ## Local product walkthrough
 
@@ -9,15 +9,15 @@ This record summarizes the checks performed on September 7, 2026. It intentional
 | Sign up, sign in, session persistence, and sign out | Verified with a real Neon Managed Better Auth account. Signed-out access is protected. |
 | Create a contact | Created a temporary contact containing every supported field; the dashboard displayed a clear success message. |
 | Refresh persistence | Reloaded the dashboard after creation; the saved contact remained visible from Neon Postgres. |
-| Edit a contact | Changed the temporary contact's name and saved it; the updated value and success message appeared. |
+| Edit a contact | Changed the temporary contact's name and saved it; the updated value, `MM/DD/YYYY` timestamp, and temporary success notice appeared. |
 | Delete a contact | The first click displayed a confirmation with cancel and delete choices. Confirming removed the contact and displayed a success message. |
 | Text search | A search with no matching contact reduced the count to zero and displayed the no-match state. |
-| Priority filter | Selecting a priority updated the visible results. |
-| Sorting | Selecting **Name A–Z** reordered the contacts alphabetically and showed the active sort choice. |
+| Priority filter | The custom warm-palette menu updated the visible results without relying on the browser's native blue selection UI. |
+| Sorting | The custom menu supports recent/least-recent updates, name, company, and priority. Recent ordering uses `updated_at`; **Name A–Z** reordered contacts alphabetically. |
 | Clear filters | The no-match state exposed a **Clear filters** action that restored the full list. |
 | Blank-name validation | Submitting the contact form without a name displayed `Name is required.` next to the field. |
 | Loading, empty, success, and error states | The dashboard provides session/data loading messages, an empty-network panel, success announcements, field errors, and a recoverable fetch-error panel. |
-| Responsive and accessible UI | The interface uses responsive grids/cards, associated form labels, minimum-size controls, visible keyboard focus styles, text priority labels, and mobile-safe form actions. |
+| Responsive and accessible UI | The interface uses responsive grids/cards, associated form labels, minimum-size controls, visible keyboard focus styles, text priority labels, accessible custom listboxes, and a mobile-safe contact modal. |
 | Browser runtime | Dashboard reloaded with meaningful content, no framework error overlay, and no application console errors. |
 
 The temporary Phase 15 verification contact was deleted after the walkthrough, leaving the account's original data intact.
@@ -34,10 +34,10 @@ Verified output:
 
 ```text
 Test Files  2 passed (2)
-Tests       8 passed (8)
+Tests       9 passed (9)
 ```
 
-The suite covers valid contact input, trimming and normalization, conversion of empty optional values to `null`, blank and whitespace-only name rejection, invalid-priority rejection, and contact sorting/filtering behavior.
+The suite covers valid contact input, trimming and normalization, conversion of empty optional values to `null`, blank and whitespace-only name rejection, invalid-priority rejection, contact sorting/filtering behavior, and recent-first ordering by `updated_at`.
 
 Additional quality commands completed successfully:
 

@@ -2,6 +2,7 @@ import type {
   ContactPriorityFilter,
   ContactSort,
 } from "@/features/contacts/utils/contact-view";
+import { CustomSelect } from "@/components/ui/custom-select";
 
 type ContactControlsProps = Readonly<{
   onPriorityChange: (priority: ContactPriorityFilter) => void;
@@ -16,6 +17,21 @@ type ContactControlsProps = Readonly<{
 
 const controlClassName =
   "min-h-11 border border-[#C9C8BD] bg-[#FAFAF5] px-3 py-2 text-sm font-normal normal-case tracking-normal text-[#474744] outline-none transition-colors placeholder:font-normal placeholder:tracking-normal placeholder:text-[#75756F] focus:border-[#A71D31] focus:ring-2 focus:ring-[#EAD1D6]";
+
+const priorityOptions = [
+  { label: "All priorities", value: "all" },
+  { label: "High", value: "high" },
+  { label: "Medium", value: "medium" },
+  { label: "Low", value: "low" },
+] as const;
+
+const sortOptions = [
+  { label: "Recently updated", value: "newest" },
+  { label: "Least recently updated", value: "oldest" },
+  { label: "Name A–Z", value: "name" },
+  { label: "Company A–Z", value: "company" },
+  { label: "Priority", value: "priority" },
+] as const;
 
 export function ContactControls({
   onPriorityChange,
@@ -44,36 +60,25 @@ export function ContactControls({
           />
         </label>
 
-        <label className="grid gap-2 text-sm font-medium text-[#474744]">
-          Priority
-          <select
-            className={controlClassName}
-            onChange={(event) =>
-              onPriorityChange(event.target.value as ContactPriorityFilter)
-            }
+        <div className="grid gap-2 text-sm font-medium text-[#474744]">
+          <span>Priority</span>
+          <CustomSelect
+            ariaLabel="Filter contacts by priority"
+            onChange={onPriorityChange}
+            options={priorityOptions}
             value={priority}
-          >
-            <option value="all">All priorities</option>
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
-          </select>
-        </label>
+          />
+        </div>
 
-        <label className="grid gap-2 text-sm font-medium text-[#474744]">
-          Sort by
-          <select
-            className={controlClassName}
-            onChange={(event) => onSortChange(event.target.value as ContactSort)}
+        <div className="grid gap-2 text-sm font-medium text-[#474744]">
+          <span>Sort by</span>
+          <CustomSelect
+            ariaLabel="Sort contacts"
+            onChange={onSortChange}
+            options={sortOptions}
             value={sort}
-          >
-            <option value="newest">Newest first</option>
-            <option value="oldest">Oldest first</option>
-            <option value="name">Name A–Z</option>
-            <option value="company">Company A–Z</option>
-            <option value="priority">Priority</option>
-          </select>
-        </label>
+          />
+        </div>
       </div>
 
       <p aria-live="polite" className="mt-3 text-sm font-normal tracking-normal text-[#75756F]">
