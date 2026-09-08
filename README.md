@@ -50,18 +50,29 @@ User -> Next.js UI -> Neon JS client -> Neon Data API -> RLS -> Neon Postgres
 The project separates routing, shared interface components, configuration, infrastructure, and feature logic:
 
 ```text
-src/
-├── app/                  # Next.js routes, layout, and global providers
-├── components/ui/        # Reusable presentation components
-├── config/               # Browser-safe environment configuration
-├── features/
-│   ├── account/          # Current-user profile and account behavior
-│   ├── auth/             # Authentication providers, screens, and controls
-│   └── contacts/         # Contact UI, validation, types, and data access
-└── lib/neon/             # Unified Neon client and generated database types
+networking-tracker/
+├── src/
+│   ├── app/                  # Thin Next.js routes, layout, and providers
+│   ├── components/ui/        # Reusable interface components
+│   ├── config/               # Application environment configuration
+│   ├── features/
+│   │   ├── account/          # Current-user profile and account behavior
+│   │   ├── auth/             # Authentication screens and session controls
+│   │   └── contacts/         # Contact UI, hooks, data, types, and validation
+│   └── lib/neon/             # Neon client and database types
+├── database/migrations/      # Contacts schema, constraints, and RLS policies
+├── docs/evidence/            # Requirement-verification record
+├── public/                   # Static browser assets
+└── *.config.* / neon.ts      # Tool-discovered project configuration
 ```
 
 Route files remain intentionally thin and compose feature components rather than containing authentication, database, or form logic.
+
+### Why configuration files remain at the repository root
+
+The root is reserved for project-wide files that are discovered by their respective tools. `package.json` and `package-lock.json` define the npm project; `next.config.ts`, `tsconfig.json`, `eslint.config.mjs`, `postcss.config.mjs`, and `vitest.config.mts` configure Next.js, TypeScript, ESLint, PostCSS, and Vitest. `neon.ts` is the Neon CLI configuration and must remain at the project root for standard `neon` commands. Moving these files into `src/config/` would require custom command-line flags or wrapper scripts and would make local setup and Vercel deployment less conventional.
+
+By contrast, `src/config/public-env.ts` contains application runtime configuration and therefore belongs inside the source tree. `.neon`, `.agents/`, `skills-lock.json`, `AGENTS.md`, and `CLAUDE.md` are non-secret development-tool metadata and guidance created by the project setup commands; they do not contain application features or production credentials.
 
 ## Local Setup
 
